@@ -5,11 +5,17 @@ var MapComponent = /** @class */ (function () {
         this.upperLeft = upperLeft;
         this.lowerRight = lowerRight;
     }
-    MapComponent.prototype.getPoints = function () {
-        return [this.upperLeft, this.lowerRight];
-    };
     MapComponent.prototype.isEqual = function (map) {
         return ((this.upperLeft == map.upperLeft) && (this.lowerRight == map.lowerRight));
+    };
+    MapComponent.prototype.inBounds = function (p) {
+        return (this.xInBounds(p.getX()) && this.yInBounds(p.getY()));
+    };
+    MapComponent.prototype.xInBounds = function (x) {
+        return (x >= this.upperLeft.getX()) && (x <= this.lowerRight.getX());
+    };
+    MapComponent.prototype.yInBounds = function (y) {
+        return (y <= this.upperLeft.getY()) && (y >= this.lowerRight.getY());
     };
     return MapComponent;
 }());

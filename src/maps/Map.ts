@@ -9,15 +9,20 @@ class Map {
         this.components.push(map);
     }
     
-    public removeMap(map : MapComponent) : void {
-        this.components.forEach((item, index) => {
-            if(map.isEqual(item)) {
-                this.components.splice(index, 1);
-            }
-        })
+    public removeMapComponent(map : MapComponent) : void {
+        let index = 0;
+        for(let i = 0; i < this.components.length; i++) {
+          if (this.components[i].isEqual(map)) {
+            index = i;
+          }
+        }
+
+        this.components.splice(index, 1);
     }
 
     private getInitialMap(p : Point) : MapComponent {
         return new MapComponent(new Point(0, 0,), p);
     }
 }
+
+

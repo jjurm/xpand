@@ -6,13 +6,14 @@ var Map = /** @class */ (function () {
     Map.prototype.addMapComponent = function (map) {
         this.components.push(map);
     };
-    Map.prototype.removeMap = function (map) {
-        var _this = this;
-        this.components.forEach(function (item, index) {
-            if (map.isEqual(item)) {
-                _this.components.splice(index, 1);
+    Map.prototype.removeMapComponent = function (map) {
+        var index = 0;
+        for (var i = 0; i < this.components.length; i++) {
+            if (this.components[i].isEqual(map)) {
+                index = i;
             }
-        });
+        }
+        this.components.splice(index, 1);
     };
     Map.prototype.getInitialMap = function (p) {
         return new MapComponent(new Point(0, 0), p);

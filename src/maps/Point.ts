@@ -7,11 +7,11 @@ class Point {
         this._y = y+1;
     }
 
-    get x(): number {
+    public getX (): number {
         return this._x;
     }
 
-    get y(): number {
+    public getY (): number {
         return this._y;
     }
 }
