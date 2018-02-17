@@ -54,7 +54,7 @@ export class Swipe{
     }
 }
 
-class Vector2D {
+export class Vector2D {
     private x: number;
     private y: number;
 
@@ -87,5 +87,15 @@ class Vector2D {
         let l = lTop/lDown;
 
         let k = (B.getX()+l*dB.getX()-A.getX())/dA.getX();
+    }
+
+    plus(vector: Vector2D) {
+        return new Vector2D(this.x + vector.x, this.y + vector.y);
+    }
+    perpendicular() {
+        return new Vector2D(this.y, -this.x);
+    }
+    scale(scale: number) {
+        return new Vector2D(this.x * scale, this.y * scale);
     }
 }
