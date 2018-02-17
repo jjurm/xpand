@@ -26,7 +26,8 @@ export class UpdateMessage extends Message {
 export class SwipeMessage extends Message {
     public constructor(device_id: string,
                        public edge: number,
-                       public distance: number) {
+                       public distance: number,
+                       public timestamp: number) {
         super(device_id);
     }
 }

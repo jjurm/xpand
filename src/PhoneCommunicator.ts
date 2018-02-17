@@ -1,12 +1,14 @@
 import {AnchoredScreen, SwipeMessage} from "./models";
 
 class PhoneCommunicator {
-    private map : Array<PhoneCommunicator>;
+    private events : Array<SwipeMessage>
+    private map : Array<AnchoredScreen>;
     private phones : Array<Phone>;
 
-    constructor() {
-        this.map = [];
+    constructor(screen : AnchoredScreen) {
+        this.map = [screen];
         this.phones = [];
+        this.events = [];
     }
 
     private findPhone(device_id : String) : Phone | null {
@@ -19,12 +21,23 @@ class PhoneCommunicator {
         return null;
     }
 
-    //private createAnchoredScreen(swipe : SwipeMessage) : AnchoredScreen {
-     //  let original = this.findPhone(swipe.device_id);
+    private addToEvents(event : SwipeMessage) {
+        this.events.push(event);
+        let len = this.events.length;
+        if((len % 2 == 0)) {
+            if ((Math.abs(this.events[len-2].timestamp-this.events[len-1].timestamp)) < 0.4) {
+             //   processEvents(this.events[len-2], this.events[len-1]);
+            }
+        }
+    }
 
+    private processEvents(event1 : SwipeMessage, event2 : SwipeMessage) : void {
+       // newScreen = this.createAnchoredScreen(event1, event2);
+    }
 
+   // private createAnchoredScreen(event1 : SwipeMessage, event2 : SwipeMessage) : AnchoredScreen {
+      // let original = this.findPhone(swipe.device_id);
 
-    //}
 }
 
 class Phone {
