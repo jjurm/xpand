@@ -1,8 +1,8 @@
 class Map {
     private components: Array<MapComponent>;
 
-    constructor(initialLowerRightPoint : Point) {
-        this.components = [this.getInitialMap(initialLowerRightPoint)];
+    constructor() {
+        this.components = [];
     }
     
     public addMapComponent(map : MapComponent) : void {
@@ -16,13 +16,9 @@ class Map {
             index = i;
           }
         }
-
         this.components.splice(index, 1);
     }
 
-    private getInitialMap(p : Point) : MapComponent {
-        return new MapComponent(new Point(0, 0,), p);
-    }
 }
 
 

@@ -1,7 +1,7 @@
 "use strict";
 var Map = /** @class */ (function () {
-    function Map(initialLowerRightPoint) {
-        this.components = [this.getInitialMap(initialLowerRightPoint)];
+    function Map() {
+        this.components = [];
     }
     Map.prototype.addMapComponent = function (map) {
         this.components.push(map);
@@ -14,9 +14,6 @@ var Map = /** @class */ (function () {
             }
         }
         this.components.splice(index, 1);
-    };
-    Map.prototype.getInitialMap = function (p) {
-        return new MapComponent(new Point(0, 0), p);
     };
     return Map;
 }());
