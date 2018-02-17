@@ -13,6 +13,9 @@ class App {
         router.get("/", (req, res) => {
             res.sendFile("index.html", { root: __dirname })
         });
+        router.get("/bundle.js", (req, res) => {
+            res.sendFile("bundle.js", { root: __dirname })
+        });
         router.get('/test', (req, res) => {
             res.json({
                 message: 'Hello World!'
