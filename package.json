@@ -2,7 +2,9 @@
   "name": "xpand",
   "version": "0.0.1",
   "dependencies": {
+    "@types/node": "^9.4.6",
     "grunt": "~0.4.2",
-    "load-grunt-tasks": "~0.2.0"
+    "load-grunt-tasks": "~0.2.0",
+    "typescript": "^2.7.2"
   }
 }
