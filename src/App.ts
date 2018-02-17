@@ -10,7 +10,10 @@ class App {
 
     private mountRoutes (): void {
         const router = express.Router();
-        router.get('/', (req, res) => {
+        router.get("/", (req, res) => {
+            res.sendFile("index.html", { root: __dirname })
+        });
+        router.get('/test', (req, res) => {
             res.json({
                 message: 'Hello World!'
             })
