@@ -14,14 +14,17 @@ const wss = new WebSocket.Server({ server });
 
 const comm = new PhoneCommunicator();
 
-wss.on('connection', function connection(ws, req) {
+wss.on('connection', function connection(ws: any, req) {
     //const location = url.parse(req.url!, true);
 
     ws.on('message', function incoming(message: string) {
         let msg = JSON.parse(message) as SwipeMessage;
         console.log(msg);
         if (comm.findPhone(msg.device_id) == null) {
-            //comm.addPhone(new Phone(msg.device_id, new AnchoredScreen(0, 0, getScreenWidth(), getScreenHeight(), 0), ws))
+            comm.addPhone(new Phone(
+                msg.device_id,
+                new AnchoredScreen(0, 0, msg.screenX, msg.screenY, 0),
+                ws))
         }
     });
 

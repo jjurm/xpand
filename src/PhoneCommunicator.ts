@@ -14,6 +14,7 @@ export class PhoneCommunicator {
 
     public addPhone(phone: Phone) {
         this.phones.push(phone);
+        console.log("Phone added");
     }
 
     public findPhone(device_id: String): Phone | null {
