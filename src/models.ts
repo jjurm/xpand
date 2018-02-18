@@ -44,6 +44,7 @@ export class SwipeMessage extends Message {
     public constructor(device_id: string,
                        public edge: number,
                        public distance: number,
+                       public inSwipe: boolean,
                        public timestamp: number) {
         super(device_id);
     }
