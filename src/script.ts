@@ -1,9 +1,9 @@
 import {UpdateMessage} from "./models";
 import {Swipe} from "./gestures/swipe"
-import {Vector2D} from "./gestures/swipe";
-import {Interval, Intervals} from "./maths";
+import {Interval, Intervals, Vector2D} from "./maths";
 import {AnchoredScreen} from "./models";
-import {getEdgeNormalVector, getEdgeStart, getEdgeVector, getScreenHeight, getScreenWidth} from "./utils";
+import {getScreenHeight, getScreenWidth} from "./utils";
+import {getEdgeNormalVector, getEdgeStart, getEdgeVector} from "./utils2";
 
 let ws: WebSocket;
 

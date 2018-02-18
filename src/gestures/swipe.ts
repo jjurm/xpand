@@ -1,6 +1,7 @@
 import * as Hammer from 'hammerjs';
 import {SwipeMessage} from "../models";
 import {device_id} from "../utils";
+import {Vector2D} from "../maths";
 
 export class Swipe{
 
@@ -85,60 +86,5 @@ export class Swipe{
 
 
         });
-    }
-}
-
-export class Vector2D {
-    private x: number;
-    private y: number;
-
-    constructor(x:number, y: number) {
-        this.x = x;
-        this.y = y;
-    }
-
-    normalised() {
-        let size = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
-
-        return new Vector2D(this.x/size, this.y/size)
-    }
-
-    dot(c:number){
-        return new Vector2D(this.x*c, this.y*c);
-    }
-
-    getX(){
-        return this.x;
-    }
-
-    getY(){
-        return this.y;
-    }
-
-    public static intersection(A:Vector2D, dA:Vector2D, B:Vector2D, dB:Vector2D){
-        let lTop = A.getY() - B.getY() + B.getX()*(dA.getY()/dA.getX())-A.getX()*(dA.getY()/dA.getX());
-        let lDown = dB.getY() - dB.getX()*(dA.getY()/dA.getX());
-
-        let l = lTop/lDown;
-
-        let k = (B.getX() + l*dB.getX() - A.getX())/dA.getX();
-
-        return new Vector2D(k, l);
-    }
-
-    plus(vector: Vector2D) {
-        return new Vector2D(this.x + vector.x, this.y + vector.y);
-    }
-    perpendicular() {
-        return new Vector2D(this.y, -this.x);
-    }
-    scale(scale: number) {
-        return new Vector2D(this.x * scale, this.y * scale);
-    }
-    size() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
-    }
-    public toString() {
-        return "[" + this.x + ", " + this.y + "]";
     }
 }
