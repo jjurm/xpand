@@ -19,7 +19,7 @@ let map: AnchoredScreen[] = [
 function start() {
     window.onresize = event => render();
 
-    /*ws = new WebSocket("ws://localhost:8080/");
+    ws = new WebSocket("ws://localhost:8080/");
     ws.onopen = event => {
 
         // socket opened
@@ -28,7 +28,7 @@ function start() {
     ws.onmessage = event => {
         let data: UpdateMessage = JSON.parse(event.data);
         console.log("Got time " + data.time);
-    };*/
+    };
 
     render();
 }

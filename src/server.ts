@@ -5,9 +5,12 @@ import WebSocket from "ws";
 
 import app from './App';
 import {UpdateMessage} from "./models";
+import {PhoneCommunicator} from "./PhoneCommunicator";
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
+
+const comm = new PhoneCommunicator();
 
 wss.on('connection', function connection(ws, req) {
     //const location = url.parse(req.url!, true);
