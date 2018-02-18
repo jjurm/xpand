@@ -16,7 +16,7 @@ export class Swipe{
         if(touchable == null) {
             throw new DOMException("screen is null");
         } else {
-            var mc = new Hammer.Manager(<HTMLElement>touchable);
+            var mc = new Hammer.Manager(<HTMLElement>touchable, {inputClass: Hammer.TouchMouseInput});
         }
 
         // create a recognizer

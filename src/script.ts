@@ -31,7 +31,7 @@ function start() {
     };
 
     let swipe:Swipe = new Swipe(msg => {
-        ws.send(msg);
+        ws.send(JSON.stringify(msg));
     });
     swipe.setupGestures();
 

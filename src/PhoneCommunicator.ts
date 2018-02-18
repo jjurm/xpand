@@ -1,4 +1,5 @@
 import {AnchoredScreen, SwipeMessage} from "./models";
+import {getEdgeNormalVector, getEdgeStart} from "./utils2";
 
 export class PhoneCommunicator {
     private events: Array<SwipeMessage>;
@@ -11,7 +12,11 @@ export class PhoneCommunicator {
         this.events = [];
     }
 
-    private findPhone(device_id: String): Phone | null {
+    public addPhone(phone: Phone) {
+        this.phones.push(phone);
+    }
+
+    public findPhone(device_id: String): Phone | null {
         for (let phone of this.phones) {
             if (phone.getUuid() == device_id) {
                 return phone;
@@ -35,8 +40,33 @@ export class PhoneCommunicator {
     private processEvents(sourceEvent: SwipeMessage, targetEvent: SwipeMessage): void {
         let sourcePhone = this.findPhone(sourceEvent.device_id)!;
         let targetPhone = this.findPhone(targetEvent.device_id)!;
+        let sourceScreen = sourcePhone.getScreen();
+        let targetScreen = targetPhone.getScreen();
 
         let newScreenRotation = (2 + sourcePhone.getScreen().rotation + sourceEvent.edge - targetEvent.edge) % 4;
+
+        let sourceEdge = sourceEvent.edge;
+        let start = getEdgeStart(sourceEdge, sourceScreen);
+        let move1 = getEdgeNormalVector((sourceEvent.edge + sourceScreen.rotation) % 4)
+            .scale(sourceEvent.distance + targetEvent.distance);
+        start = start.plus(move1);
+
+        let newScreen = new AnchoredScreen(start.getX(), start.getY(),
+            targetScreen.width, targetScreen.height, targetScreen.rotation);
+
+        let i = 0;
+        while (i < this.map.length) {
+            if (this.map[i].equals(targetScreen)) {
+                this.map.splice(i, 1);
+            } else i++;
+        }
+        this.map.push(targetScreen);
+        this.mapUpdated();
+    }
+
+    public mapUpdated() {
+        console.log("MAP UPDATED");
+        console.log(this.map);
     }
 
     /*private createAnchoredScreen(event1: SwipeMessage, event2: SwipeMessage): AnchoredScreen {
@@ -45,13 +75,15 @@ export class PhoneCommunicator {
 
 }
 
-class Phone {
+export class Phone {
     private uuid: string;
     private screen: AnchoredScreen;
+    private ws: WebSocket;
 
-    constructor(uuid: string, screen: AnchoredScreen) {
+    constructor(uuid: string, screen: AnchoredScreen, ws: WebSocket) {
         this.uuid = uuid;
         this.screen = screen;
+        this.ws = ws;
     }
 
     getScreen(): AnchoredScreen {
