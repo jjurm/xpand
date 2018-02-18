@@ -16,8 +16,8 @@ wss.on('connection', function connection(ws, req) {
         console.log('received: %s', message);
     });
 
-    let msg = new UpdateMessage(8);
-    ws.send(JSON.stringify(msg));
+    /*let msg = new UpdateMessage(8);
+    ws.send(JSON.stringify(msg));*/
 });
 
 server.listen(8080, function listening() {
