@@ -30,6 +30,11 @@ function start() {
         console.log("Got time " + data.time);
     };
 
+    let swipe:Swipe = new Swipe(msg => {
+        ws.send(msg);
+    });
+    swipe.setupGestures();
+
     render();
 }
 
@@ -42,11 +47,6 @@ function render() {
     function xt(vector: Vector2D) {
         return vector.getX();
     }
-
-    let swipe:Swipe = new Swipe(msg => {
-        ws.send(msg);
-    });
-    swipe.setupGestures()
 
     function yt(vector: Vector2D) {
         return vector.getY();

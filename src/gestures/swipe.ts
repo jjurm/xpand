@@ -81,7 +81,7 @@ export class Swipe{
                 }
             }
 
-            callback(new SwipeMessage(device_id, edgeNumber, distance, inSwipe, new Date().getTime()));
+            callback(new SwipeMessage(device_id, edgeNumber, distance, inSwipe));
 
 
         });
