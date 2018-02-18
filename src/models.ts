@@ -47,6 +47,9 @@ export class SwipeMessage extends Message {
                        public inSwipe: boolean) {
         super(device_id);
     }
+    public toString() {
+        return (this.inSwipe ? "IN" : "OUT") + " edge: " + this.edge + ", distance: " + this.distance;
+    }
 }
 
 
