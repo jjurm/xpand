@@ -134,4 +134,10 @@ export class Vector2D {
     scale(scale: number) {
         return new Vector2D(this.x * scale, this.y * scale);
     }
+    size() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+    public toString() {
+        return "[" + this.x + ", " + this.y + "]";
+    }
 }
