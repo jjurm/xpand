@@ -12,7 +12,7 @@ export function getEdgeStart(edge: number, screen: AnchoredScreen): Vector2D {
         case 3:
             return new Vector2D(screen.x + screen.width, screen.y);
         default:
-            throw "invalid edge index";
+            throw "invalid edge index " + edge;
     }
 }
 

@@ -26,13 +26,13 @@ export class PhoneCommunicator {
         return null;
     }
 
-    private addToEvents(event: SwipeMessage) {
+    public addToEvents(event: SwipeMessage) {
         this.events.push(event);
         let len = this.events.length;
         if (len < 2) return;
         let e1 = this.events[len - 2];
         let e2 = this.events[len - 1];
-        if ((Math.abs(e1.time - e2.time)) < 1.0) {
+        if ((Math.abs(e1.time - e2.time)) < 6000) {
 
             this.processEvents(e1, e2);
         }

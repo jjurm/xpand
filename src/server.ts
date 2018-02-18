@@ -16,6 +16,7 @@ const comm = new PhoneCommunicator();
 
 wss.on('connection', function connection(ws: any, req) {
     //const location = url.parse(req.url!, true);
+    console.log("Accepted WS connetion");
 
     ws.on('message', function incoming(message: string) {
         let msg = JSON.parse(message) as SwipeMessage;
@@ -26,7 +27,9 @@ wss.on('connection', function connection(ws: any, req) {
                 new AnchoredScreen(0, 0, msg.screenX, msg.screenY, 0),
                 ws))
         }
+        comm.addToEvents(msg);
     });
+    ws.on('err', () => console.log("WS err"));
 
     /*let msg = new UpdateMessage(8);
     ws.send(JSON.stringify(msg));*/

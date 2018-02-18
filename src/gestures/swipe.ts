@@ -86,8 +86,12 @@ export class Swipe {
                 }
             }
 
-            callback(new SwipeMessage(device_id, edgeNumber, distance, inSwipe,
-                getScreenWidth(), getScreenHeight()));
+            if (edgeNumber == -1) {
+                console.log("Edge number -1")
+            } else {
+                callback(new SwipeMessage(device_id, edgeNumber, distance, inSwipe,
+                    getScreenWidth(), getScreenHeight()));
+            }
 
 
         });
