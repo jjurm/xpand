@@ -1,9 +1,15 @@
 import * as Hammer from 'hammerjs';
+import {SwipeMessage} from "../models";
+import {device_id} from "../utils";
 
 export class Swipe{
 
+    constructor(public callback: (msg: SwipeMessage)=>void) {
+
+    }
+
     setupGestures() {
-        var touchable = document.getElementById('touchable');
+        var touchable = document.getElementById('content');
 
         // create a manager for screen
         if(touchable == null) {
@@ -18,6 +24,7 @@ export class Swipe{
         // add the recognizer
         mc.add(swipe);
 
+        const callback = this.callback;
         mc.on('swipe', function(e) {
             let start: Vector2D = new Vector2D(e.changedPointers[0].screenX-e.deltaX,e.changedPointers[0].screenY-e.deltaY);
             let end: Vector2D = new Vector2D(e.changedPointers[0].screenX, e.changedPointers[0].screenY)
@@ -34,22 +41,48 @@ export class Swipe{
                 inSwipe = true;
             }
 
-            let border1: Vector2D = new Vector2D(0, 0);
-            let border2: Vector2D = new Vector2D(0, 0);
             let reference: Vector2D;
             if(inSwipe) {
-                direction = direction.dot(-1);
                 reference = end;
             } else {
                 reference = start;
             }
 
-            if(direction.getX() > 0){
+            let linePoints = [
+                new Vector2D(0, 0),
+                new Vector2D(0, screenSize.getY()),
+                new Vector2D(screenSize.getX(), screenSize.getY()),
+                new Vector2D(screenSize.getX(), 0)];
 
-                if(direction.getY() > 0) {
-                    border1 = new Vector2D(screenSize.getX(), direction.getY()*(screenSize.getX()-reference.getX())/direction.getX());
+            let lineDirections = [
+                new Vector2D(0, 1),
+                new Vector2D(1, 0),
+                new Vector2D(0, -1),
+                new Vector2D(-1, 0)];
+
+            let inters: Vector2D = new Vector2D(-1, -1);
+            let edgeNumber = -1;
+            let distance = -1;
+            for(let i:number = 0; i < linePoints.length; i++) {
+                let epsilon = 0.01;
+                let coefficients:Vector2D = Vector2D.intersection(reference, direction, linePoints[i], lineDirections[i]);
+                if(coefficients.getX() > 0) {
+                    inters = reference.plus(direction.scale(coefficients.getX()));
+                    if(
+                        inters.getX() < screenSize.getX()+epsilon &&
+                        inters.getX() > 0 - epsilon &&
+                        inters.getY() < screenSize.getY()+epsilon &&
+                        inters.getY() > 0 - epsilon){
+                        edgeNumber = i;
+                        distance = coefficients.getY();
+                        break;
+                    }
                 }
             }
+
+            callback(new SwipeMessage(device_id, edgeNumber, distance, new Date().getTime()));
+
+
         });
     }
 }
@@ -81,12 +114,15 @@ export class Vector2D {
         return this.y;
     }
 
-    intersection(A:Vector2D, dA:Vector2D, B:Vector2D, dB:Vector2D) {
-        let lTop = A.getY()-B.getY()+(B.getX()-A.getX())*(dA.getY()/dA.getX());
+    public static intersection(A:Vector2D, dA:Vector2D, B:Vector2D, dB:Vector2D){
+        let lTop = A.getY() - B.getY() + B.getX()*(dA.getY()/dA.getX())-A.getX()*(dA.getY()/dA.getX());
         let lDown = dB.getY() - dB.getX()*(dA.getY()/dA.getX());
+
         let l = lTop/lDown;
 
-        let k = (B.getX()+l*dB.getX()-A.getX())/dA.getX();
+        let k = (B.getX() + l*dB.getX() - A.getX())/dA.getX();
+
+        return new Vector2D(k, l);
     }
 
     plus(vector: Vector2D) {

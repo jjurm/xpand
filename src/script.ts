@@ -1,4 +1,5 @@
 import {UpdateMessage} from "./models";
+import {Swipe} from "./gestures/swipe"
 
 let ws : WebSocket;
 
@@ -14,6 +15,11 @@ function start() {
         let data: UpdateMessage = JSON.parse(event.data);
         console.log("Got time " + data.time)
     }
+
+    let swipe:Swipe = new Swipe(msg => {
+        ws.send(msg);
+    });
+    swipe.setupGestures()
 
 }
 
