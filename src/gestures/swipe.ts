@@ -44,6 +44,7 @@ export class Swipe{
             let reference: Vector2D;
             if(inSwipe) {
                 reference = end;
+                direction = direction.scale(-1)
             } else {
                 reference = start;
             }
